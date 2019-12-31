@@ -1,0 +1,16 @@
+{
+  "asDependentOnProductNames": [
+  ], 
+  "oProductVersion": "2019-12-31 16:49", 
+  "oRepository": {
+    "sBranch": "master", 
+    "sRepositoryName": "fsBase64Decode", 
+    "sType": "GitHub", 
+    "sUserName": "SkyLined"
+  }, 
+  "oTrialPeriodDuration": null, 
+  "sLicenseServerURL": null, 
+  "sProductAuthor": "SkyLined", 
+  "sProductName": "fsBase64Decode", 
+  "sProductURL": "https://github.com/SkyLined/fsBase64Decode"
+}
