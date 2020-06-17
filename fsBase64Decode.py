@@ -1,4 +1,4 @@
-def fsBase64Decode(sBase64EncodedData, bDebug):
+def fsBase64Decode(sBase64EncodedData, bDebug = False):
   uBitCache = 0;
   uBitsInBitCache = 0;
   sDecodedData = "";
@@ -15,7 +15,7 @@ def fsBase64Decode(sBase64EncodedData, bDebug):
       uBase64Chars += 1;
       uPaddingChars += 1;
       uBitCache <<= 6;
-      uBitsInBitCache += 6;
+      uBitsInBitCache -= 2;
     elif uPaddingChars == 0:
       uBase64Chars += 1;
       u6Bits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".find(sBase64Char);
@@ -42,7 +42,7 @@ def fsBase64Decode(sBase64EncodedData, bDebug):
           repr(chr(uByte)), uByte,
           bin(uBitCache)[2:].rjust(uBitsInBitCache, "0"), uBitsInBitCache
         );
-      if uPaddingChars > 1 and len(sDecodeData % 3) + uPaddingChars == 3:
+      if uPaddingChars > 1 and (len(sDecodedData) % 3) + uPaddingChars == 3:
         break;
   uMissingPaddingChars = 0;
   while uBitsInBitCache != 0:
