@@ -1,0 +1,1 @@
+Implements a base64 decode function with extensive error reporting.
