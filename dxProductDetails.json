@@ -1,12 +1,16 @@
 {
-  "asProductTypes": ["Python application", "Python module"],
-  "sPythonModuleName": "fsBase64Decode",
+  "asDependentOnProductNames": [], 
+  "asJavaScriptModuleNames": [], 
+  "asOptionalProductNames": [], 
+  "asPHPModuleNames": [], 
+  "asProductTypes": [
+    "Python application", 
+    "Python module"
+  ], 
   "asPythonApplicationNames": [
     "fsBase64Decode"
-  ],
-  "asDependentOnProductNames": [], 
-  "asOptionalProductNames": [], 
-  "oProductVersion": "2020-06-17 15:53", 
+  ], 
+  "oProductVersion": "2021-03-01 09:12", 
   "oRepository": {
     "sBranch": "master", 
     "sRepositoryName": "fsBase64Decode", 
@@ -17,5 +21,6 @@
   "sLicenseServerURL": null, 
   "sProductAuthor": "SkyLined", 
   "sProductName": "fsBase64Decode", 
-  "sProductURL": "https://github.com/SkyLined/fsBase64Decode"
+  "sProductURL": "https://github.com/SkyLined/fsBase64Decode", 
+  "sPythonModuleName": "fsBase64Decode"
 }
