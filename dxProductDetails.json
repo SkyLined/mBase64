@@ -1,24 +1,29 @@
 {
-  "asDependentOnProductNames": [], 
-  "asJavaScriptModuleNames": [], 
-  "asOptionalProductNames": [], 
-  "asPHPModuleNames": [], 
+  "a0sDebugAdditionalProductNames": [
+    "mFileSystemItem",
+    "mDebugOutput",
+    "mNotProvided",
+    "mWindowsSDK",
+    "mConsole"
+  ],
+  "a0sPythonApplicationNames": [
+    "Base64Decode"
+  ],
   "asProductTypes": [
-    "Python application", 
+    "Python application",
     "Python module"
-  ], 
-  "asPythonApplicationNames": [
-    "fsBase64Decode"
-  ], 
-  "oProductVersion": "2021-04-15 11:36", 
-  "oRepository": {
-    "sBranch": "master", 
-    "sRepositoryName": "fsBase64Decode", 
-    "sType": "GitHub", 
-    "sUserName": "SkyLined"
-  }, 
-  "sProductAuthor": "SkyLined", 
-  "sProductName": "fsBase64Decode", 
-  "sProductURL": "https://github.com/SkyLined/fsBase64Decode", 
-  "sPythonModuleName": "fsBase64Decode"
+  ],
+  "o0Repository": {
+    "sStructureVersion": "2021-07-02 11:16",
+    "sType": "GitHub",
+    "sbBranch": "master",
+    "sbRepositoryName": "mBase64",
+    "sbUserName": "SkyLined"
+  },
+  "oProductVersion": "2021-07-07 12:47",
+  "s0PythonModuleName": "mBase64",
+  "sProductAuthor": "SkyLined",
+  "sProductName": "mBase64",
+  "sStructureVersion": "2021-07-02 11:16",
+  "sb0ProductURL": "https://github.com/SkyLined/mBase64"
 }

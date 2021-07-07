@@ -1,13 +1,15 @@
 from fTestDependencies import fTestDependencies;
 fTestDependencies();
+try: # mDebugOutput use is Optional
+  import mDebugOutput as m0DebugOutput;
+except ModuleNotFoundError as oException:
+  if oException.args[0] != "No module named 'mDebugOutput'":
+    raise;
+  m0DebugOutput = None;
 
 try:
-  import mDebugOutput;
-except:
-  mDebugOutput = None;
-try:
   try:
-    from oConsole import oConsole;
+    from mConsole import oConsole;
   except:
     import sys, threading;
     oConsoleLock = threading.Lock();
@@ -16,13 +18,13 @@ try:
       def fOutput(*txArguments, **dxArguments):
         sOutput = "";
         for x in txArguments:
-          if isinstance(x, (str, unicode)):
+          if isinstance(x, str):
             sOutput += x;
         sPadding = dxArguments.get("sPadding");
         if sPadding:
           sOutput.ljust(120, sPadding);
         oConsoleLock.acquire();
-        print sOutput;
+        print(sOutput);
         sys.stdout.flush();
         oConsoleLock.release();
       fPrint = fOutput;
@@ -31,39 +33,40 @@ try:
         pass;
   
   import base64, random, sys;
-  from fsBase64Decode import fsBase64Decode;
+  from fsbBase64Decode import fsbBase64Decode;
   
   bDebug = "--debug" in sys.argv;
   
-  for sData in [
-    "Hello, world!",
-    "".join([chr(u) for u in range(256)]),
+  for sbData in [
+    b"Hello, world!",
+    b"".join([bytes([u]) for u in range(256)]),
   ]:
-    print "sData: %s" % repr(sData);
-    sEncodedData = base64.b64encode(sData);
-    print "sEncodedData: %s" % repr(sEncodedData);
-    assert base64.b64decode(sEncodedData) == sData, \
-        "%s decodes to %s instead of %s" % (repr(sEncodedData), repr(sDecodedData), repr(sData));
-    sDecodedData = fsBase64Decode(sEncodedData, bDebug = bDebug);
-    print "sDecodedData: %s" % repr(sDecodedData);
-    assert sDecodedData == sData, \
-        "%s decodes to %s instead of %s" % (repr(sEncodedData), repr(sDecodedData), repr(sData));
+    print("sbData: %s" % repr(sbData));
+    sbEncodedData = base64.b64encode(sbData);
+    print("sbEncodedData: %s" % repr(sbEncodedData));
+    sbDecodedData = base64.b64decode(sbEncodedData);
+    assert sbDecodedData == sbData, \
+        "base64 library error: %s decodes to %s instead of %s" % (repr(sbEncodedData), repr(sbDecodedData), repr(sbData));
+    sbDecodedData = fsbBase64Decode(sbEncodedData, bDebug = bDebug);
+    print("sbDecodedData: %s" % repr(sbDecodedData));
+    assert sbDecodedData == sbData, \
+        "%s decodes to %s instead of %s" % (repr(sbEncodedData), repr(sbDecodedData), repr(sbData));
     
-    sNormalKey = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    asRandomChars = [chr(u) for u in xrange(0x21, 0x7E)];
-    random.shuffle(asRandomChars);
-    sRandomKey = "".join(asRandomChars)[:65];
-    print "sRandomKey: %s" % repr(sRandomKey);
-    sRandomEncodedData = "".join([
-      sRandomKey[sNormalKey.find(sChar)]
-      for sChar in sEncodedData
+    sbNormalKey = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    asbRandomChars = [bytes((u,)) for u in range(0x21, 0x7E)];
+    random.shuffle(asbRandomChars);
+    sbRandomKey = b"".join(asbRandomChars)[:65];
+    print("sbRandomKey: %s" % repr(sbRandomKey));
+    sbRandomEncodedData = bytes([
+      sbRandomKey[sbNormalKey.find(uCharCode)]
+      for uCharCode in sbEncodedData
     ]);
-    print "sRandomEncodedData: %s" % repr(sRandomEncodedData);
-    sDecodedData = fsBase64Decode(sRandomEncodedData, s0Key = sRandomKey, bDebug = bDebug);
-    print "sDecodedData: %s" % repr(sDecodedData);
-    assert sDecodedData == sData, \
-        "%s\ndecodes to \n%s\ninstead of\n%s" % (repr(sEncodedData), repr(sDecodedData), repr(sData));
+    print("sbRandomEncodedData: %s" % repr(sbRandomEncodedData));
+    sbDecodedData = fsbBase64Decode(sbRandomEncodedData, sb0Key = sbRandomKey, bDebug = bDebug);
+    print("sbDecodedData: %s" % repr(sbDecodedData));
+    assert sbDecodedData == sbData, \
+        "%s\ndecodes to \n%s\ninstead of\n%s" % (repr(sbEncodedData), repr(sbDecodedData), repr(sbData));
 except Exception as oException:
-  if mDebugOutput:
-    mDebugOutput.fTerminateWithException(oException, bShowStacksForAllThread = True);
+  if m0DebugOutput:
+    m0DebugOutput.fTerminateWithException(oException, bShowStacksForAllThread = True);
   raise;

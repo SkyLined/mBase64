@@ -1,5 +1,4 @@
-from fsBase64Decode import fsBase64Decode;
+from .fInitializeProduct import fInitializeProduct;
+fInitializeProduct();
 
-__all__ = [
-  "fsBase64Decode",
-];
+from .mExports import *;
