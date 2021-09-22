@@ -1,7 +1,11 @@
 def fInitializeProduct():
   import json, os, sys;
   
-  from mExitCodes import guExitCodeInternalError, guExitCodeBadDependencyError;
+  try:
+    from mExitCodes import guExitCodeInternalError, guExitCodeBadDependencyError;
+  except: # If mExitCodes does not exist, use default values:
+    guExitCodeInternalError = 1;
+    guExitCodeBadDependencyError = 3;
   
   import __main__;
   bIsMainProduct = hasattr(__main__, "__file__") and os.path.dirname(__main__.__file__) == os.path.dirname(__file__);
