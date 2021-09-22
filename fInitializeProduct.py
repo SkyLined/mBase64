@@ -1,6 +1,8 @@
 def fInitializeProduct():
   import json, os, sys;
   
+  from mExitCodes import guExitCodeInternalError, guExitCodeBadDependencyError;
+  
   import __main__;
   bIsMainProduct = hasattr(__main__, "__file__") and os.path.dirname(__main__.__file__) == os.path.dirname(__file__);
   
@@ -38,7 +40,11 @@ def fInitializeProduct():
           print("%s depends on %s which cannot be loaded because of an error:" % (sProductName, sModuleName));
           print("%s: %s" % (oException.__class__.__name__, oException));
         print("*" * 80);
-      raise;
+      # Dump exception stack like Python would
+      import traceback;
+      traceback.print_exc();
+      # Terminate with the appropriate exit code from mExitCodes (use standard values if it cannot be loaded).
+      sys.exit(guExitCodeBadDependencyError if bModuleNotFound else guExitCodeInternalError);
     if bDebugOutput: fDebugOutput("+ Module %s loaded (%s)." % (sModuleName, os.path.dirname(oModule.__file__)));
     return oModule;
   
