@@ -7,6 +7,7 @@ except ModuleNotFoundError as oException:
     raise;
   m0DebugOutput = None;
 
+guExitCodeInternalError = 1; # Use standard value
 try:
   try:
     from mConsole import oConsole;
@@ -68,5 +69,5 @@ try:
         "%s\ndecodes to \n%s\ninstead of\n%s" % (repr(sbEncodedData), repr(sbDecodedData), repr(sbData));
 except Exception as oException:
   if m0DebugOutput:
-    m0DebugOutput.fTerminateWithException(oException, bShowStacksForAllThread = True);
+    m0DebugOutput.fTerminateWithException(oException, guExitCodeInternalError, bShowStacksForAllThread = True);
   raise;

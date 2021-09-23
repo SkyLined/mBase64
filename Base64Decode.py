@@ -4,6 +4,7 @@ from fInitializeProduct import fInitializeProduct;
 fInitializeProduct();
 
 from fsbBase64Decode import fsbBase64Decode;
+from mExitCodes import *;
 
 if __name__ == "__main__":
   import sys;
@@ -14,7 +15,7 @@ if __name__ == "__main__":
   for sArgument in sys.argv[1:]:
     if sArgument in ["--help", "-h", "-?", "/help", "/h", "/?"]:
       print("Usage: fsBase64Decode [input file] [output file] [--debug] [--key[=<65 chars>]]");
-      sys.exit(0);
+      sys.exit(guExitCodeSuccess);
     elif sArgument == "--debug":
       bDebug = True;
     elif sArgument == "--key":
@@ -35,7 +36,7 @@ if __name__ == "__main__":
       oInputFile.close();
     except:
       print("Cannot read from input file %s!" % sys.argv[1]);
-      sys.exit(1);
+      sys.exit(guExitCodeCannotReadFromFileSystem);
   else:
     sbBase64EncodedData = b"";
     print("Please enter base 64 encoded data. Terminate input with an empty line:");
@@ -58,7 +59,7 @@ if __name__ == "__main__":
       oOutputFile.close();
     except:
       print("Cannot write to output file %s!" % sys.argv[1]);
-      sys.exit(1);
+      sys.exit(guExitCodeCannotWriteToFileSystem);
   else:
     print("Decoded data:");
     print(sbDecodedData);
