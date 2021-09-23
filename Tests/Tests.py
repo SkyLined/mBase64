@@ -28,7 +28,6 @@ try:
         print(sOutput);
         sys.stdout.flush();
         oConsoleLock.release();
-      fPrint = fOutput;
       @staticmethod
       def fStatus(*txArguments, **dxArguments):
         pass;
