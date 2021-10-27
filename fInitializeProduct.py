@@ -1,4 +1,4 @@
-def fInitializeProduct():
+﻿def fInitializeProduct():
   import json, os, sys;
   
   try:
@@ -54,14 +54,17 @@ def fInitializeProduct():
   
   # This is supposed to be the __init__.py file in the module folder.
   sProductFolderPath = os.path.normpath(os.path.dirname(__file__));
-  asPotentialModuleParentPaths = [];
-  if bProductIsAnApplication:
-    # Applications can be stand-alone, where all dependcy modules are in a `modules` sub-folder of the product folder:
-    asPotentialModuleParentPaths.append(os.path.join(sProductFolderPath, "modules"));
-  # Applications can use shared modules, where dependencies' folders are children of the application's parent
-  # folder. Non-application modules' dependencies are always children of the module's parent folder.
-  # Therefore we always add the product's parent folder to the modules search path.
-  asPotentialModuleParentPaths.append(os.path.dirname(sProductFolderPath));
+  asPotentialModuleParentPaths = [
+    # Applications can use shared modules, where dependencies' folders are children of the application's parent
+    # folder. Non-application modules' dependencies are always children of the module's parent folder.
+    # Therefore we always add the product's parent folder to the modules search path.
+    os.path.dirname(sProductFolderPath),
+    ] + (
+      # Applications can be stand-alone, where all dependency modules are in a `modules` sub-folder of the product
+      # folder. This folder 
+      [os.path.join(sProductFolderPath, "modules")] if bProductIsAnApplication else []
+    )
+  ];
   asOriginalSysPath = sys.path[:];
   # Our search path will be the main product folder first, its parent folder
   # second, the "modules" child folder of the main product folder third, and
