@@ -1,10 +1,10 @@
 {
   "a0sDebugAdditionalProductNames": [
-    "mFileSystemItem",
+    "mConsole",
     "mDebugOutput",
+    "mFileSystemItem",
     "mNotProvided",
-    "mWindowsSDK",
-    "mConsole"
+    "mWindowsSDK"
   ],
   "a0sPythonApplicationNames": [
     "Base64Decode"
@@ -20,7 +20,7 @@
     "sbRepositoryName": "mBase64",
     "sbUserName": "SkyLined"
   },
-  "oProductVersion": "2021-09-23 08:34",
+  "oProductVersion": "2021-10-29 09:07",
   "s0PythonModuleName": "mBase64",
   "sProductAuthor": "SkyLined",
   "sProductName": "mBase64",
