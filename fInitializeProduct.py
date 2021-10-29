@@ -61,7 +61,7 @@
     # sub-folder (i.e. release mode).
     asOriginalSysPath = sys.path[:];
     asModulesPaths = [
-      os.path.dirname(sProductFolderPath)
+      os.path.dirname(sProductFolderPath),
       os.path.join(sProductFolderPath, "modules"),
     ]
     sys.path = asModulesPaths + [sPath for sPath in sys.path if sPath not in asModulesPaths];
