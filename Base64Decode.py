@@ -14,7 +14,7 @@ if __name__ == "__main__":
   sb0Key = None;
   for sArgument in sys.argv[1:]:
     if sArgument in ["--help", "-h", "-?", "/help", "/h", "/?"]:
-      print("Usage: fsBase64Decode [input file] [output file] [--debug] [--key[=<65 chars>]]");
+      print("Usage: Base64Decode [input file] [output file] [--debug] [--key[=<65 chars>]]");
       sys.exit(guExitCodeSuccess);
     elif sArgument == "--debug":
       bDebug = True;
@@ -43,14 +43,14 @@ if __name__ == "__main__":
     while 1:
       sInput = input("");
       if sInput == "": break;
-      sbBase64EncodedData += ("\n" if sbBase64EncodedData else "") + bytes(sInput, "utf-8");
+      sbBase64EncodedData += (b"\n" if sbBase64EncodedData else b"") + bytes(sInput, "utf-8");
   
   if sb0Key == b"":
     print("Please enter 65 character key (64 data + 1 padding):");
     sb0Key = bytes(input(""), "utf-8");
   assert sb0Key is None or len(sb0Key) == 65, \
       "Key must be 65 characters, not %d" % len(s0Key);
-  sbDecodedData = fsBase64Decode(sbBase64EncodedData, sb0Key = sb0Key, bDebug = bDebug);
+  sbDecodedData = fsbBase64Decode(sbBase64EncodedData, sb0Key = sb0Key, bDebug = bDebug);
   
   if sOutputFilePath:
     try:
