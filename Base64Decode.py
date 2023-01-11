@@ -1,5 +1,7 @@
-import sys;
+import os, sys;
 
+sModulePath = os.path.dirname(__file__);
+sys.path = [sModulePath] + [sPath for sPath in sys.path if sPath.lower() != sModulePath.lower()];
 from fInitializeProduct import fInitializeProduct;
 fInitializeProduct();
 
@@ -49,7 +51,7 @@ if __name__ == "__main__":
     print("Please enter 65 character key (64 data + 1 padding):");
     sb0Key = bytes(input(""), "utf-8");
   assert sb0Key is None or len(sb0Key) == 65, \
-      "Key must be 65 characters, not %d" % len(s0Key);
+      "Key must be 65 characters, not %d" % len(sb0Key);
   sbDecodedData = fsbBase64Decode(sbBase64EncodedData, sb0Key = sb0Key, bDebug = bDebug);
   
   if sOutputFilePath:
