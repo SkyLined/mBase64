@@ -1,24 +1,47 @@
 ﻿def fInitializeProduct():
-  import json, os, sys;
-
-  from foConsoleLoader import foConsoleLoader;
-  oConsole = foConsoleLoader();
-
-  from mExitCodes import guExitCodeInternalError, guExitCodeBadDependencyError;
-  from mColorsAndChars import \
-      COLOR_BUSY, CHAR_BUSY, \
-      COLOR_ERROR, CHAR_ERROR, \
-      COLOR_INFO, CHAR_INFO, \
-      COLOR_LIST, CHAR_LIST, \
-      COLOR_OK, CHAR_OK, \
-      COLOR_WARNING, CHAR_WARNING, \
-      COLOR_HILITE, COLOR_NORMAL;
-
-  import __main__;
+  import __main__, json, os, sys;
   bProductIsAnApplication = hasattr(__main__, "__file__") and os.path.dirname(__main__.__file__) == os.path.dirname(__file__);
-  
   bDebugOutput = "@debug-product-initialization" in sys.argv[1:]; # This flag will be remove from the arguments at the end of this code.
-  
+  sProductFolderPath = os.path.normpath(os.path.dirname(__file__));
+
+  if bProductIsAnApplication:
+    # If this is not an application, the modules search path has already been set.
+    # But if it is, we want to search the application's parent path for modules in the same
+    # parent folder as the application (e.g. development mode) as well as modules in the "modules"
+    # sub-folder (i.e. release mode).
+    asOriginalSysPath = sys.path[:];
+    asModulesPaths = [
+      os.path.dirname(sProductFolderPath),
+      sProductFolderPath,
+      os.path.join(sProductFolderPath, "modules"),
+    ]
+    sys.path = asModulesPaths + [sPath for sPath in sys.path if sPath not in asModulesPaths];
+    if bDebugOutput:
+      from foConsoleLoader import foConsoleLoader;
+      oConsole = foConsoleLoader();
+
+      from mExitCodes import guExitCodeInternalError, guExitCodeBadDependencyError;
+      from mColorsAndChars import \
+          COLOR_BUSY, CHAR_BUSY, \
+          COLOR_ERROR, CHAR_ERROR, \
+          COLOR_INFO, CHAR_INFO, \
+          COLOR_LIST, CHAR_LIST, \
+          COLOR_OK, CHAR_OK, \
+          COLOR_WARNING, CHAR_WARNING, \
+          COLOR_HILITE, COLOR_NORMAL;
+      oConsole.fOutput(
+        COLOR_INFO, CHAR_INFO,
+        COLOR_NORMAL, " Module search paths:",
+      );
+      for sPath in sys.path:
+        oConsole.fOutput(
+          COLOR_NORMAL, "  ",
+          COLOR_LIST, CHAR_LIST,
+          COLOR_NORMAL, " ",
+          COLOR_INFO, sPath,
+          COLOR_NORMAL, ".",
+        );
+
   def fo0LoadModule(sProductName, sModuleName, bOptional = False):
     if sModuleName in sys.modules:
       return sys.modules[sModuleName];
@@ -98,35 +121,10 @@
     );
     return oModule;
   
-  # This is supposed to be the __init__.py file in the module folder.
-  sProductFolderPath = os.path.normpath(os.path.dirname(__file__));
-  if bProductIsAnApplication:
-    # If this is not an application, the modules search path has already been set.
-    # But if it is, we want to search the application's parent path for modules in the same
-    # parent folder as the application (e.g. development mode) as well as modules in the "modules"
-    # sub-folder (i.e. release mode).
-    asOriginalSysPath = sys.path[:];
-    asModulesPaths = [
-      os.path.dirname(sProductFolderPath),
-      os.path.join(sProductFolderPath, "modules"),
-    ]
-    sys.path = asModulesPaths + [sPath for sPath in sys.path if sPath not in asModulesPaths];
-    if bDebugOutput:
-      oConsole.fOutput(
-        COLOR_INFO, CHAR_INFO,
-        COLOR_NORMAL, " Module search paths:",
-      );
-      for sPath in sys.path:
-        oConsole.fOutput(
-          COLOR_NORMAL, "  ",
-          COLOR_LIST, CHAR_LIST,
-          COLOR_NORMAL, " ",
-          COLOR_INFO, sPath,
-          COLOR_NORMAL, ".",
-        );
   # Load the dxProductDetails.json file and extract dependencies:
   sProductDetailsFilePath = os.path.join(sProductFolderPath, "dxProductDetails.json");
-  if bDebugOutput: oConsole.fStatus(
+  if bDebugOutput:
+    oConsole.fStatus(
       COLOR_BUSY, CHAR_BUSY,
       COLOR_NORMAL, " Loading product details file ",
       COLOR_HILITE, sProductDetailsFilePath,
@@ -181,5 +179,5 @@
   # output even though it was requested. Once this code is executed
   # in the main product, all modules should have been loaded.
   if bDebugOutput and bProductIsAnApplication:
-    sys.argv = sys.argv[:1] + [s for s in sys.argv[1:] if s != "@debug-product-initialization"];
+    sys.argv.remove("@debug-product-initialization");
   
