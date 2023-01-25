@@ -6,11 +6,7 @@
     "mNotProvided",
     "mWindowsSDK"
   ],
-  "a0sPythonApplicationNames": [
-    "Base64Decode"
-  ],
   "asProductTypes": [
-    "Python application",
     "Python module"
   ],
   "o0Repository": {
