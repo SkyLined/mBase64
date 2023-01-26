@@ -58,9 +58,15 @@ def fsbBase64Decode(sbBase64EncodedData, sb0Key = None, bDebug = False):
           "Expected %d bits, got %s" % (uBitsInBitCache, bin(uBitCache)[2:]);
     elif uPaddingChars == 0:
       uBase64Chars += 1;
-      u6Bits = auIndexTable.index(uBase64Byte);
-      if u6Bits == -1:
-        print("Base64 data has an invalid character at offset %d: assuming end of base64 data." % uIndex);
+      try:
+        u6Bits = auIndexTable.index(uBase64Byte);
+      except ValueError:
+        print(
+          "Base64 data has an invalid character %s at offset %d: assuming end of base64 data." % (
+            repr(chr(uBase64Byte)) if 0x20 <= uBase64Byte <= 0x7E else "%02X" % uBase64Byte,
+            uIndex,
+          )
+        );
         break;
       uBitCache = (uBitCache << 6) + u6Bits;
       uBitsInBitCache += 6;
