@@ -12,7 +12,7 @@ gsbDefaultKey = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 def fsbBase64Decode(sbBase64EncodedData, sb0Key = None, bDebug = False):
   assert isinstance(sbBase64EncodedData, bytes), \
       "sBase64EncodedData muts be eithe a str or bytes, not %s (%s)" % \
-      (repr(type(sBase64EncodedData)), repr(sBase64EncodedData));
+      (repr(type(sbBase64EncodedData)), repr(sbBase64EncodedData));
   if sb0Key is None:
     sbKey = gsbDefaultKey;
   else:
